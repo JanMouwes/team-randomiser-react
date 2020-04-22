@@ -51,6 +51,7 @@ class TeamRandomiser extends React.Component {
 
     render() {
         const {teams = [], errors: previousErrors = []} = this.state;
+        const {width = 400} = this.props;
 
         // Consume errors
         const errors = [];
@@ -60,7 +61,8 @@ class TeamRandomiser extends React.Component {
 
         const TeamRenderer = ({teams, ...otherProps}) => {
             const TeamItem = ({members, number}) => <div>Team {number}: {members.join(", ")}</div>;
-            const teamsElement = teams.map((team, index) => (<TeamItem key={index} members={team} number={index + 1}/>))
+            const teamsElement = teams.filter(team => team.length > 0).map((team, index) => (
+                <TeamItem key={index} members={team.sort()} number={index + 1}/>))
 
             return <div {...otherProps}>
                 {teamsElement}
@@ -79,7 +81,7 @@ class TeamRandomiser extends React.Component {
         }
 
         return (
-            <div className={"p-2 bg-light " + this.props.className || ""} style={{width: 400, height: "auto"}}>
+            <div className={"p-2 bg-light " + this.props.className || ""} style={{width: width, height: "auto"}}>
                 <h4 className="App-header">Team Randomiser</h4>
                 <hr/>
 
