@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import randomiseTeams from "./randomise-teams";
+import PropTypes from "prop-types"
 
 class TeamRandomiser extends React.Component {
 
@@ -51,7 +52,6 @@ class TeamRandomiser extends React.Component {
 
     render() {
         const {teams = [], errors: previousErrors = []} = this.state;
-        const {width = 400} = this.props;
 
         // Consume errors
         const errors = [];
@@ -80,38 +80,41 @@ class TeamRandomiser extends React.Component {
             return <span className={"text-danger " + className} {...otherProps}>{errors.join(", ")}</span>
         }
 
+        const {className = "", ...otherProps} = this.props;
+
         return (
-            <div className={"p-2 bg-light " + this.props.className || ""} style={{width: width, height: "auto"}}>
-                <h4 className="App-header">Team Randomiser</h4>
-                <hr/>
+            <form className={className} onSubmit={(event) => this.onFormSubmit(event)} {...otherProps}>
+                <div className="d-flex justify-content-between mb-2">
+                    <h6 className="mb-0 align-self-center">Number of teams</h6>
+                    <input
+                        onInput={event => this.onTeamCountChange(event)}
+                        className="w-25 form-control"
+                        min={1}
+                        type="number"
+                        defaultValue={2}
+                    />
+                </div>
 
-                <form className="p-1" onSubmit={(event) => this.onFormSubmit(event)}>
-                    <div className="d-flex justify-content-between mb-2">
-                        <h6 className="mb-0 align-self-center">Number of teams</h6>
-                        <input
-                            onInput={event => this.onTeamCountChange(event)}
-                            className="w-25 form-control"
-                            min={1}
-                            type="number"
-                            defaultValue={3}
-                        />
-                    </div>
-
+                <div>
                     <h6>Team members:</h6>
-
                     <textarea
                         ref={(element) => (this.textArea = element)}
                         className="form-control d-block mb-2"
                         placeholder="John Smith, Jane Smith"
                         style={{resize: "none"}}
                     />
-                    <input type="submit" className="btn btn-success" value="Randomise!"/>
-                    <ErrorRenderer errors={errors} className="my-2 d-block"/>
-                    <TeamRenderer teams={teams} className="pt-2"/>
-                </form>
-            </div>
+                </div>
+                <input type="submit" className="btn btn-success" value="Randomise!"/>
+
+                {errors.length > 0 ? <ErrorRenderer errors={errors} className="my-2 d-block"/> : null}
+                {teams.length > 0 ? (<TeamRenderer teams={teams} className="mt-2 mb-1"/>) : null}
+            </form>
         );
     }
 }
+
+TeamRandomiser.propTypes = {
+    className: PropTypes.string
+};
 
 export default TeamRandomiser;
