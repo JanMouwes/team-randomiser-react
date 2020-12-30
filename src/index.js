@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TeamRandomiserCard from "./TeamRandomiserCard";
-import TeamRandomiserBlock from "./TeamRandomiserBlock";
 
 ReactDOM.render(
     <React.StrictMode>
-        <div className="bg-dark p-3">
-            <TeamRandomiserBlock className="m-1"/>
-            <TeamRandomiserCard className="m-1"/>
+        <div className="bg-dark" style={{height:"100vh", paddingTop:"20%"}}>
+            <TeamRandomiserCard className="mx-auto align-middle" />
         </div>
     </React.StrictMode>,
     document.getElementById('root')
