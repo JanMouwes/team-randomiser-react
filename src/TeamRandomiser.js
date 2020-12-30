@@ -11,7 +11,7 @@ class TeamRandomiser extends React.Component {
         this.state = {
             members: [],
             errors: [],
-            amountOfTeams: 3
+            amountOfTeams: 2
         }
     }
 
@@ -51,7 +51,7 @@ class TeamRandomiser extends React.Component {
     }
 
     render() {
-        const {teams = [], errors: previousErrors = []} = this.state;
+        const {teams = [], errors: previousErrors = [], amountOfTeams} = this.state;
 
         // Consume errors
         const errors = [];
@@ -91,7 +91,7 @@ class TeamRandomiser extends React.Component {
                         className="w-25 form-control"
                         min={1}
                         type="number"
-                        defaultValue={2}
+                        defaultValue={amountOfTeams}
                     />
                 </div>
 
